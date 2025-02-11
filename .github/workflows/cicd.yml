@@ -20,9 +20,9 @@ jobs:
       - name: Login to Docker hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build docker image
-        run: docker build -t advanced-spring-study .
+        run: docker build -t hyunzip/advanced-spring-study .
       - name: Publish image to docker hub
-        run: docker push advanced-spring-study:latest
+        run: docker push hyunzip/advanced-spring-study:latest
 
 
   deploy:
@@ -30,8 +30,8 @@ jobs:
     runs-on: [aws-ec2]
     steps:
       - name: Pull Image from docker hub
-        run: docker pull advanced-spring-study:latest
+        run: docker pull hyunzip/advanced-spring-study:latest
       - name: Delete old container
-        run: docker rm -f advanced-spring-study-container
+        run: docker rm -f hyunzip/advanced-spring-study-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name advanced-spring-study-container advanced-spring-study
+        run: docker run -d -p 8080:8080 --name advanced-spring-study-container hyunzip/advanced-spring-study
