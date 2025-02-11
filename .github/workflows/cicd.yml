@@ -2,7 +2,7 @@ name: CICD
 
 on:
   push:
-    brances: [main]
+    branches: [main]
 
 jobs:
   build:
@@ -20,9 +20,9 @@ jobs:
       - name: Login to Docker hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build docker image
-        run: docker build -t AdvancedSpringStudy .
+        run: docker build -t advanced-spring-study .
       - name: Publish image to docker hub
-        run: docker push AdvancedSpringStudy:latest
+        run: docker push advanced-spring-study:latest
 
 
   deploy:
@@ -30,8 +30,8 @@ jobs:
     runs-on: [aws-ec2]
     steps:
       - name: Pull Image from docker hub
-        run: docker pull AdvancedSpringStudy:latest
+        run: docker pull advanced-spring-study:latest
       - name: Delete old container
-        run: docker rm -f AdvancedSpringStudy-container
+        run: docker rm -f advanced-spring-study-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name AdvancedSpringStudy-container AdvancedSpringStudy
+        run: docker run -d -p 8080:8080 --name advanced-spring-study-container advanced-spring-study
