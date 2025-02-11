@@ -21,7 +21,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Gradle
-        run: ./gradlew build -x test
+        run: |
+          echo ${{secrets.APPLICATION_YML}} | base64 --decode > ./src/main/resources/application.yml
+          ./gradlew build -x test
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
